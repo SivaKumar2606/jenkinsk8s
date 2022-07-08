@@ -6,7 +6,7 @@ pipeline {
 
     stage('SCM Checkout') {
       steps {
-        git url:'', branch:''
+        git url:'https://github.com/SivaKumar2606/jenkinsk8s.git', branch:'test1-k8sdeploy'
       }
     }
 

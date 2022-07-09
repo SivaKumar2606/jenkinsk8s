@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: sivakumar2606/k8nginxcicd:7
+      - image: sivakumar2606/k8nginxcicd:2
         imagePullPolicy: Always
         name: nginx
         containerPort: 80

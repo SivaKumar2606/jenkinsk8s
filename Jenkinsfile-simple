@@ -1,11 +1,6 @@
 
 pipeline {
 
-  environment {
-    dockerimagename = "sivakumar2606/k8nginxcicd"
-    dockerImage = ""
-  }
-
   agent any
 
   stages {
@@ -18,25 +13,21 @@ pipeline {
 
     stage('Build image') {
       steps{
-        script {
-          dockerImage = docker.build dockerimagename + ":$BUILD_NUMBER"
-        }
+       sh "docker build -t sivakumar2606/k8nginxcicd:$BUILD_NUMBER"
       }
     }
 
     stage('Pushing Image') {
-      environment {
-               registryCredential = 'mydockerhublogin'
-           }
       steps{
         script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push()
+          withCredentials([usernamePassword(credentialsId: 'mydockerhublogin', passwordVariable: 'docker_paswd', usernameVariable: 'docker_user')]) {
+            sh "docker login -u $docker_user -p $docker_paswd"  
+              }
           }
+          sh "docker push sivakumar2606/k8nginxcicd:$BUILD_NUMBER"
         }
       }
-    }
-
+    
     stage('Deploying App to Kubernetes') {
       steps {
         script {

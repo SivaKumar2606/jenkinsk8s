@@ -16,7 +16,7 @@ spec:
         app: myweb
     spec:
       containers:
-      - image: sivakumar2606/k8nginxcicd:2
+      - image: sivakumar2606/k8nginxcicd:3
         imagePullPolicy: Always
         name: nginx
         containerPort: 80
@@ -36,4 +36,4 @@ spec:
     targetPort: 80
   selector:
     app: myweb
-  type: LoadBalancer
+  type: NodePort
